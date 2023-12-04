@@ -7,41 +7,49 @@ const morgan = require("morgan");
 const app = express();
 app.use(morgan("dev"));
 
-app.get("/counter", (req, res, next) => {
+app.get("/get-users", (req, res, next) => {
   res.json(["Tony", "Lisa", "Michael", "Ginger", "Food"]);
 });
 
 /**
  * Ejecucion de tarea en hilo principal
  */
-setInterval(() => {
-  console.time("op");
-  hardWork();
-  console.timeEnd("op");
-}, 10000);
+// setInterval(() => {
+//   console.time("op");
+//   hardWork();
+//   console.timeEnd("op");
+// }, 10000);
 
-const hardWork = () => {
-  let i = 0;
-  while (i < 4000000000) {
-    i++;
-  }
-  return i;
-};
+// const hardWork = () => {
+//   let i = 0;
+//   while (i < 4500000000) {
+//     i++;
+//   }
+//   return i;
+// };
 
 /**
  * Creando un nuevo worker:
  */
-// const worker = new Worker("./workers/hard-work.worker.js");
-// setInterval(() => {
-//   worker.postMessage("start");
-// }, 10000);
+// Función para iniciar un nuevo worker
+const startWorker = () => {
+  const worker = new Worker("./workers/hard-work.worker.js");
+  worker.on("message", (msg) => {
+    if (msg === "done") {
+      console.log("worker process done!");
+      worker.terminate().then(() => {
+        console.log("worker terminated!");
+      });
+    }
+  });
+  // Enviar mensaje al worker para iniciar la tarea
+  worker.postMessage("start");
+};
 
-// worker.on("message", (msg) => {
-//   if (msg === "done") {
-//     console.log("worker process done!");
-//   }
-// });
-// end worker
+setInterval(() => {
+  console.log("starting worker...");
+  startWorker();
+}, 10000);
 
 const port = process.env.PORT || 3100;
 app.listen(port, () => {

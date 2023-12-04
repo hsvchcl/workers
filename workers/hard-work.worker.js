@@ -8,6 +8,7 @@ parentPort.on("message", (msg) => {
     parentPort.postMessage("done");
     console.timeEnd("opInWorker");
   }
+  parentPort.close();
 });
 
 const hardWork = () => {
