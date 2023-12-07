@@ -31,7 +31,6 @@ app.get("/get-users", (req, res, next) => {
 /**
  * Creando un nuevo worker:
  */
-// Función para iniciar un nuevo worker
 const startWorker = () => {
   const worker = new Worker("./workers/hard-work.worker.js");
   worker.on("message", (msg) => {
