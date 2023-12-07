@@ -20,7 +20,7 @@ Ejecuta el siguiente comando para instalar las dependencias necesarias:
 ### Uso
 Una vez que hayas instalado las dependencias, puedes ejecutar el servidor Express utilizando el siguiente comando:
 
-`node server.js`
+`node app.js`
 
 El servidor se ejecutará en el puerto especificado (por defecto, 3100) y mostrará un mensaje en la consola que indica que el servidor está corriendo. Puedes acceder al servidor en tu navegador o mediante una herramienta de solicitud HTTP, como curl o Postman, utilizando la URL http://localhost:3100.
 
